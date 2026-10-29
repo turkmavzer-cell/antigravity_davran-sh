@@ -1,5 +1,15 @@
 {
   "name": "antigravity_davran-sh",
-  "version": "1.0.0",
-  "description": "Akıllı model yönlendirme kuralı: her görevden önce en uygun modeli önerir, kullanıcı onayını bekler ve geri bildirimlerden öğrenerek kendini geliştirir."
+  "displayName": "Antigravity Davranış & Model Yönlendirici",
+  "version": "2.0.0",
+  "description": "Kendini geliştiren, kota dostu ve çok repolu Antigravity çalışma sistemi: her görevden önce 1. öneri + yedek model sunar, kota kontrolü için onay bekler, 3 katmanlı hafıza ile öğrenir ve GitHub ile otomatik senkronize olur.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/turkmavzer-cell/antigravity_davran-sh.git"
+  },
+  "suggestedPrompts": [
+    "projeyi bağla",
+    "kuralı güncelle ve senkronize et",
+    "öğrendiklerini göster"
+  ]
 }

@@ -1,74 +1,66 @@
-# Model Yönlendirme Kuralı (antigravity_davran-sh)
+# Model Yönlendirme, Kota Kontrolü ve Öğrenme Kuralı (antigravity_davran-sh)
 
 > Kaynak repo: https://github.com/turkmavzer-cell/antigravity_davran-sh
 > Yerel konum: `C:\Users\dell\.gemini\config\plugins\antigravity_davran-sh`
-> Kural sürümü: **1.0.0**
+> Kural sürümü: **2.0.0** · İletişim dili: **Türkçe**
 
-## 1. Ne zaman devreye girer?
+## 1. Ne zaman devreye girer ve Kota/Limit Kontrol Protokolü
 
-Kullanıcı **iş gerektiren** yeni bir görev veya araştırma verdiğinde (kod yazma, hata ayıklama,
-planlama, araştırma, tarayıcı otomasyonu, dosya oluşturma, analiz vb.) **herhangi bir araç
-çağırmadan veya işe başlamadan ÖNCE** bu kuralı uygula.
+Kullanıcı **iş gerektiren** yeni bir görev verdiğinde (kod yazma, hata ayıklama, planlama, araştırma, tarayıcı otomasyonu, dosya oluşturma, analiz vb.) **herhangi bir araç çağırmadan veya işe başlamadan ÖNCE DUR** ve bu kuralı uygula.
 
-**Atla (doğrudan yanıtla):**
-- Selamlaşma, teşekkür, tek cümlelik bilgi soruları
-- Kullanıcının zaten onay verdiği bir görevin devamı ("devam et", "evet", "tamam")
-- Aynı konuşmada aynı görev türü için daha önce onay alınmışsa
-- Kullanıcı mesajında `!direkt` veya `!skip` geçiyorsa
+> **ÖNEMLİ KURAL (Kota/Limit Kontrolü):** Şu anki model zaten 1. önerilen model olsa bile (`✅ Uygun`), **ASLA onay adımını atlama ve doğrudan işe başlama!** Kullanıcı işe başlamadan önce seçili modelin kalan kullanım limitine/kotasına bakar; limit azalmışsa iş yarıda kalmasın diye yedek modele geçebilir.
 
-## 2. Görev → Model Eşleme Tablosu
+**Atla (doğrudan yanıtla — sadece bu durumlarda sorma):**
+- Selamlaşma, teşekkür, tek cümlelik basit bilgi soruları
+- Zaten onay verilmiş bir görevin kesintisiz devamı ("devam et", "evet", "tamam", "onunla devam et")
+- Kullanıcı mesajında açıkça `!direkt` veya `!skip` geçiyorsa
 
-| Görev türü | Önerilen model | Gerekçe |
-| :--- | :--- | :--- |
-| Mimari / sistem tasarımı / veritabanı şeması | **Claude Opus 5.5** | Derin akıl yürütme, uzun vadeli tutarlılık |
-| Zor bug, race condition, bellek sızıntısı, güvenlik analizi | **Claude Opus 5.5** | Çok adımlı neden-sonuç analizi |
-| Kapsamlı code review / refactor planı | **Claude Opus 5.5** | Bütüncül değerlendirme |
-| Kural/skill/plugin tasarlama, prompt mühendisliği | **Claude Opus 5.5** | Meta-düzey planlama |
-| Özellik geliştirme, çok dosyalı kodlama | **Claude Sonnet 5.5** | Kod + araç kullanımında en dengeli |
-| Tarayıcı otomasyonu (Chrome ile görev yürütme) | **Claude Sonnet 5.5** | Güvenilir çok adımlı araç kullanımı |
-| Test yazma, CI/build hatalarını düzeltme | **Claude Sonnet 5.5** | Hızlı ve isabetli iterasyon |
-| Küçük düzeltme, format, yorum/docstring ekleme | **Gemini 3.8 Flash** | Hız ve düşük gecikme |
-| Log / test çıktısı özetleme, basit soru-cevap | **Gemini 3.8 Flash** | Hızlı tarama |
-| Çeviri, metin düzenleme, kısa dokümantasyon | **Gemini 3.8 Flash** | Rutin dil işi |
-| Ekran görüntüsü / UI tasarımından koda dönüştürme | **Gemini 4 Argon** | Güçlü multimodal anlama |
-| Çok büyük repo / uzun doküman analizi | **Gemini 4 Argon** | Geniş bağlam penceresi |
-| Web araştırması, kaynak tarama, karşılaştırmalı rapor | **Gemini 4 Argon** | Arama + uzun bağlam sentezi |
-| Google Cloud / Firebase / Android / Flutter işleri | **Gemini 4 Argon** | Google ekosistemi bilgisi |
-| Alternatif görüş / açık model ile kıyaslama | **GPT-OSS 120B** | Farklı bakış açısı |
+## 2. Öneri Kutusu Formatı
 
-Görev birden fazla türe giriyorsa **en zor alt adımı** belirleyici kabul et. Uzun görevlerde
-aşama değişikliği önerebilirsin (ör. "Planlama Opus'ta, uygulama Sonnet'te").
-
-`learnings/LEARNINGS.md` içinde bu tabloyla çelişen **onaylanmış** bir öğrenim varsa öğrenim önceliklidir.
-
-## 3. Öneri formatı
-
-Mevcut modeli, sistemin bildirdiği model ayarından belirle. Ardından tam olarak şu formatta
-yaz ve **DUR** (hiçbir araç çağırma, işe başlama):
+Mevcut modeli sistem bildiriminden (`<USER_SETTINGS_CHANGE>` veya `SessionStart` hook mesajından) belirle. Tam olarak şu formatta yaz ve **DUR** (hiçbir araç çağırma):
 
 ```
 🎯 Görev türü: <tür>
-🤖 Önerilen model: <model> — <tek cümlelik gerekçe>
+📏 Tahmini kapsam & kota yükü: <Düşük (tek adım) / Orta (2-4 adım) / Yüksek (çok dosyalı, derin analiz)>
+🤖 1. Önerilen model: <model> — <tek cümlelik gerekçe>
+🔄 2. Yedek (limit dostu) alternatif: <alternatif model> — <limit azsa neden bu seçilmeli>
 📍 Şu anki model: <model>  →  ✅ Uygun / 🔄 Değiştirmeniz önerilir
-👉 Modeli değiştirip "devam et" yazın, ya da "bu modelle devam" deyin.
+👉 Limitinizi kontrol edin; devam için "devam et" yazın veya modeli değiştirip "devam et" deyin.
 ```
 
-Kullanıcı "devam et" / "bu modelle devam" / "evet" derse görevi eksiksiz yürüt.
+## 3. Görev → Model Eşleme Tablosu
 
-## 4. Kendini geliştirme (öğrenme döngüsü)
+| Görev türü | 1. Önerilen model | 2. Yedek (limit dostu) | Gerekçe |
+| :--- | :--- | :--- | :--- |
+| Mimari / sistem tasarımı / veritabanı şeması | **Claude Opus 5.5** | **Gemini 4 Argon** | Derin akıl yürütme; yedekte geniş bağlam sentezi |
+| Zor bug, race condition, bellek sızıntısı, güvenlik | **Claude Opus 5.5** | **Claude Sonnet 5.5** | Çok adımlı kök neden analizi |
+| Kapsamlı code review / refactor planı | **Claude Opus 5.5** | **Gemini 4 Argon** | Bütüncül değerlendirme ve mimari alternatifler |
+| Kural/skill/plugin tasarlama, prompt mühendisliği | **Claude Opus 5.5** | **Gemini 4 Argon** | Meta-düzey sistem ve kurgu tasarımı |
+| Özellik geliştirme, çok dosyalı kodlama | **Claude Sonnet 5.5** | **Gemini 4 Argon** | Kod üretimi ve araç kullanımında en dengeli |
+| Tarayıcı otomasyonu (Chrome ile görev yürütme) | **Claude Sonnet 5.5** | **Gemini 4 Argon** | Güvenilir çok adımlı araç kullanımı |
+| Test yazma, CI/build hatalarını düzeltme | **Claude Sonnet 5.5** | **Gemini 3.8 Flash** | Hızlı ve isabetli iterasyon |
+| Küçük düzeltme, format, yorum/docstring ekleme | **Gemini 3.8 Flash** | **GPT-OSS 120B** | Hız, düşük gecikme ve minimum kota tüketimi |
+| Log / test çıktısı özetleme, basit soru-cevap | **Gemini 3.8 Flash** | **GPT-OSS 120B** | Hızlı tarama |
+| Çeviri, metin düzenleme, kısa dokümantasyon | **Gemini 3.8 Flash** | **GPT-OSS 120B** | Rutin dil işi |
+| Ekran görüntüsü / UI tasarımından koda dönüştürme | **Gemini 4 Argon** | **Claude Sonnet 5.5** | Güçlü multimodal anlama |
+| Çok büyük repo / uzun doküman analizi | **Gemini 4 Argon** | **Gemini 3.8 Flash** | Geniş bağlam penceresi |
+| Web araştırması, kaynak tarama, karşılaştırmalı rapor | **Gemini 4 Argon** | **Gemini 3.8 Flash** | Arama + uzun bağlam sentezi |
+| Google Cloud / Firebase / Android / Flutter işleri | **Gemini 4 Argon** | **Claude Sonnet 5.5** | Google ekosistemi bilgisi |
+| Alternatif görüş / açık model ile kıyaslama | **GPT-OSS 120B** | **Gemini 3.8 Flash** | Farklı bakış açısı |
 
-Şu sinyallerden biri gelirse `learnings/LEARNINGS.md` dosyasına tarihli bir satır ekle:
-- Kullanıcı öneriyi reddedip başka bir modelle devam ederse (sinyal: *override*)
-- Kullanıcı "bu iş için X daha iyiydi / yanlış öneri" derse (sinyal: *düzeltme*)
-- Kullanıcı öneriyi açıkça beğenirse (sinyal: *onay*)
-- Menüde tabloda olmayan yeni bir model görülürse (sinyal: *yeni-model*)
+Görev birden fazla türe giriyorsa **en zor alt adımı** belirleyici kabul et. `learnings/model-routing.md` ve `learnings/user-preferences.md` içindeki onaylanmış tercihler önceliklidir.
 
-**Tabloyu güncelleme eşiği:** Aynı görev türü için aynı yönde **2 veya daha fazla** sinyal
-birikirse ya da kullanıcı açıkça "kuralı güncelle" derse:
-1. Bu dosyadaki tabloyu güncelle ve kural sürümünü artır (yama: x.y.**z**, yeni satır: x.**y**.0).
-2. `CHANGELOG.md` dosyasına ne değiştiğini ve neden değiştiğini yaz.
-3. `scripts/sync.ps1 -Message "<özet>"` ile commit at ve GitHub'a gönder.
-4. Kullanıcıya tek satırla bildir: "📈 Kural güncellendi: <özet>".
+## 4. Alt Ajan (Subagent) ile Kota Tasarrufu
 
-Ayrıntılı prosedür için `model-router-evolve` skill'ini kullan.
-Öğrenimleri kaydetmek dışında, kullanıcı onayı olmadan bu repoda başka değişiklik yapma.
+Ana model **Claude Opus 5.5**, **Claude Sonnet 5.5** veya **Gemini 4 Argon** iken, görevin içindeki rutin alt işleri (çoklu dosya arama, log tarama, ön araştırma) ana modelin kotasını harcamamak için `invoke_subagent` aracında `Model: "flash"` veya `"flash_lite"` seçerek alt ajana devret.
+
+## 5. Üç Katmanlı Hafıza ve Öğrenme Döngüsü
+
+Öğrenimleri tam olarak ilgili katmana yaz (`model-router-evolve` skill prosedürünü izle):
+1. **Model Tercihi (`learnings/model-routing.md`):**
+   - Kullanıcı *"limit azaldı / kotadan dolayı X ile devam et"* derse → **`kota-gecisi`** olarak kaydet; tablo eşik sayımına **dahil etme**.
+   - Kullanıcı *"bu iş için X daha iyi / yanlış öneri"* derse → **`override`** veya **`düzeltme`** olarak kaydet. Aynı görev türünde aynı model lehine **2+ sinyal** birikince bu dosyadaki tabloyu güncelle, sürümü artır, `CHANGELOG.md`'ye işle.
+   - Kullanıcı öneriyi açıkça beğenirse veya 3+ kez onaylarsa → **`onay`** kaydet; 3+ onay alan eşleşmeleri tabloda `🔒 Doğrulandı` olarak işaretle.
+2. **Kişisel Kullanıcı Profili (`learnings/user-preferences.md`):** Tüm projelerde geçerli çalışma, dil, git ve stil tercihleri.
+3. **Projeye Özel Bilgi (`<proje>/.agents/learnings/PROJECT.md`):** Sadece açık olan projeye özgü mimari kararlar, tuzaklar ve komutlar. Proje reposunda commit/push yapmadan önce `projects/REGISTRY.md` içindeki commit politikasına (`sor` varsayılan) uy.
+4. Kullanıcı **"projeyi bağla"** dediğinde `project-link` skill'ini çalıştır.

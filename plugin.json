@@ -1,0 +1,5 @@
+{
+  "name": "antigravity_davran-sh",
+  "version": "1.0.0",
+  "description": "Akıllı model yönlendirme kuralı: her görevden önce en uygun modeli önerir, kullanıcı onayını bekler ve geri bildirimlerden öğrenerek kendini geliştirir."
+}

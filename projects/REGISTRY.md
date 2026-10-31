@@ -12,3 +12,4 @@
 | Proje Adı | Yerel Yol | GitHub Repo URL | Teknoloji Yığını | Bağlanma Tarihi | Commit Politikası |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `antigravity_davran-sh` (Core) | `C:\Users\dell\.gemini\config\plugins\antigravity_davran-sh` | https://github.com/turkmavzer-cell/antigravity_davran-sh | PowerShell, Markdown, Antigravity Plugin/Hooks | 2026-10-29 | `ayri-otomatik` (Hook ile anında) |
+| `kedihane` | `c:\Users\dell\.gemini\antigravity\scratch\kedihane` | https://github.com/turkmavzer-cell/kedihane.git | Python, Shell, Multi-Agent Ekosistemi (7 Ajan), PSD/Medya Otomasyonu | 2026-10-31 | `sor` |

@@ -12,4 +12,5 @@
 | Proje Adı | Yerel Yol | GitHub Repo URL | Teknoloji Yığını | Bağlanma Tarihi | Commit Politikası |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `antigravity_davran-sh` (Core) | `C:\Users\dell\.gemini\config\plugins\antigravity_davran-sh` | https://github.com/turkmavzer-cell/antigravity_davran-sh | PowerShell, Markdown, Antigravity Plugin/Hooks | 2026-10-29 | `ayri-otomatik` (Hook ile anında) |
-| `kedihane` | `c:\Users\dell\.gemini\antigravity\scratch\kedihane` | https://github.com/turkmavzer-cell/kedihane.git | Python, Shell, Multi-Agent Ekosistemi (7 Ajan), PSD/Medya Otomasyonu | 2026-10-31 | `otomatik-hafıza` (hafıza dışı: `sor`) |
+| `kedihane` | `c:\Users\dell\.gemini\antigravity\scratch\kedihane` | https://github.com/turkmavzer-cell/kedihane.git | Python, Shell, Multi-Agent Ekosistemi (8 Ajan), PSD/Medya Otomasyonu | 2026-10-31 | `otomatik-hafıza` (hafıza dışı: `sor`) |
+| `AB-Aycam-SosyalMedyaYonetimi` (`Kedihane` Yönetiminde) | `E:\ab ayçam\AB-Aycam-SosyalMedyaYonetimi` (Güncelleme: `E:\ab ayçam\github-guncelleme`) | https://github.com/turkmavzer-cell/AB-Aycam-SosyalMedyaYonetimi.git | Kedihane Otomatik Çift Repo Yönetimi (Tekir + 7 Ajan), Meta Business Suite, Gemini/Flow Medya & Video Kurgu | 2026-11-07 | `kullanici-github-desktop` (`sor`) |
